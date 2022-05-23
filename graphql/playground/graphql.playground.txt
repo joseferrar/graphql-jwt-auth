@@ -1,0 +1,41 @@
+Graphql Operations:-
+
+mutation Mutation($registerInput: RegisterInput) {
+   registerUser(registerInput:$registerInput) {
+     email
+     password
+     username
+   }
+ }
+
+ mutation Mutation($loginInput: LoginInput) {
+   loginUser(loginInput:$loginInput) {
+     email
+     password
+   }
+ }
+
+query {
+  allUsers {
+    username
+    email
+  }
+}
+
+
+Graphql Variables:-
+
+{
+  "registerInput": {
+    "username": "",
+    "email": "",
+    "password": "1234567890",
+  }
+}
+
+{
+  "loginInput": {
+    "email": "",
+    "password": "",
+  }
+}
