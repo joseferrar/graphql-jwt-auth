@@ -26,11 +26,15 @@ module.exports = gql`
     password: String
   }
 
-
+  input DeleteInput {
+    id: String
+  }
+  
   type Mutation {
     registerUser(registerInput: RegisterInput): users
     loginUser(loginInput: LoginInput): users
     updateUser(updateInput: UpdateInput): users
+    deleteUser(deleteInput: DeleteInput): users
   }
 
   type Query {

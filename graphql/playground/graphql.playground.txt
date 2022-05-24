@@ -1,4 +1,4 @@
-Graphql Operations:-
+<---------------------------Graphql Operations------------------------------------->
 
 //Register
 mutation Mutation($registerInput: RegisterInput) {
@@ -26,6 +26,11 @@ mutation Mutation($updateInput: UpdateInput) {
   }
 }
 
+//Delete User
+ input DeleteInput {
+    id: String
+  }
+
 //Get All Users
 query {
   allUsers {
@@ -34,8 +39,7 @@ query {
   }
 }
 
-
-Graphql Variables:-
+<---------------------------Graphql Variables------------------------------------->
 
 //Register
 {
@@ -57,9 +61,16 @@ Graphql Variables:-
 //Update User
 {
   "updateInput": {
-    "id": "", //update exiting user id
+    "id": "", //type exiting user id
     "username": "",
     "email": "",
     "password": "",
+  }
+}
+
+//Delete User
+{
+  "deleteInput": {
+    "id": "",  //type exiting user id
   }
 }

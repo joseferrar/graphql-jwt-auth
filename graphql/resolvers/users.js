@@ -66,5 +66,10 @@ module.exports = {
         password: password,
       });
     },
+
+    async deleteUser(_, { deleteInput: { id } }) {
+      await userSchema.findByIdAndDelete({ _id: id }).exec();
+      return "user dlete";
+    },
   },
 };
