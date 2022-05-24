@@ -46,10 +46,6 @@ module.exports = {
         throw new Error("Email not exist !!!");
       }
       if (user && (await bcrypt.compare(password, user.password))) {
-        const token = await jwt.sign({ email }, process.env.JWT_SECRET); // Create token
-
-        user.token = token; // save user token
-
         return {
           //graphql response
           id: user.id,
