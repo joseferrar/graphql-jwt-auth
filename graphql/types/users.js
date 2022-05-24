@@ -19,9 +19,18 @@ module.exports = gql`
     password: String
   }
 
+  input UpdateInput {
+    id: String
+    username: String
+    email: String
+    password: String
+  }
+
+
   type Mutation {
     registerUser(registerInput: RegisterInput): users
     loginUser(loginInput: LoginInput): users
+    updateUser(updateInput: UpdateInput): users
   }
 
   type Query {

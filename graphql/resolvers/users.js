@@ -57,5 +57,14 @@ module.exports = {
         throw new Error("Incorrect password");
       }
     },
+
+    //update user
+    async updateUser(_, { updateInput: { id, username, email, password } }) {
+      return await userSchema.findByIdAndUpdate(id, {
+        username: username,
+        email: email,
+        password: password,
+      });
+    },
   },
 };
