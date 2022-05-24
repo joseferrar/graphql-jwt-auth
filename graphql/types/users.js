@@ -2,6 +2,7 @@ const { gql } = require("apollo-server");
 
 module.exports = gql`
   type users {
+    id: String
     username: String
     email: String
     password: String
