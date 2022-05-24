@@ -1,5 +1,6 @@
 Graphql Operations:-
 
+//Register
 mutation Mutation($registerInput: RegisterInput) {
    registerUser(registerInput:$registerInput) {
      email
@@ -8,6 +9,7 @@ mutation Mutation($registerInput: RegisterInput) {
    }
  }
 
+//Login
  mutation Mutation($loginInput: LoginInput) {
    loginUser(loginInput:$loginInput) {
      email
@@ -15,6 +17,16 @@ mutation Mutation($registerInput: RegisterInput) {
    }
  }
 
+//Update User
+mutation Mutation($updateInput: UpdateInput) {
+  updateUser(updateInput:$updateInput) {
+    username
+    email
+    password
+  }
+}
+
+//Get All Users
 query {
   allUsers {
     username
@@ -25,6 +37,7 @@ query {
 
 Graphql Variables:-
 
+//Register
 {
   "registerInput": {
     "username": "",
@@ -33,8 +46,19 @@ Graphql Variables:-
   }
 }
 
+//Login
 {
   "loginInput": {
+    "email": "",
+    "password": "",
+  }
+}
+
+//Update User
+{
+  "updateInput": {
+    "id": "", //update exiting user id
+    "username": "",
     "email": "",
     "password": "",
   }
