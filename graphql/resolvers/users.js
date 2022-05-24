@@ -9,10 +9,16 @@ module.exports = {
     async allUsers() {
       return userSchema.find({});
     },
+    
   },
 
   // <-----------------------------Graphql Mutations----------------------------------->
   Mutation: {
+    
+    async getUserId(_, { GetUserId: { id } }) {
+      return userSchema.findById(id);
+    },
+
     async registerUser(_, { registerInput: { username, email, password } }) {
       var emailExists = await userSchema.findOne({ email });
       if (emailExists) {
@@ -25,10 +31,7 @@ module.exports = {
         password: await bcrypt.hash(password, 10),
       });
 
-      // Create token
-      const token = await jwt.sign({ email }, process.env.JWT_SECRET);
-      // save user token
-      users.token = token;
+   
 
       const res = await users.save();
 
@@ -46,6 +49,10 @@ module.exports = {
         throw new Error("Email not exist !!!");
       }
       if (user && (await bcrypt.compare(password, user.password))) {
+        const token = await jwt.sign({ email }, process.env.JWT_SECRET, {expiresIn: "15s"}); // Create token
+
+        user.token = token; // save user token
+
         return {
           //graphql response
           id: user.id,
