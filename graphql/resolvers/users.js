@@ -3,19 +3,22 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 
 module.exports = {
-  //get all users from database
+  // <-----------------------------Graphql Queries----------------------------------->
   Query: {
+    //get all users from database
     async allUsers() {
       return userSchema.find({});
     },
   },
 
+  // <-----------------------------Graphql Mutations----------------------------------->
   Mutation: {
     async registerUser(_, { registerInput: { username, email, password } }) {
       var emailExists = await userSchema.findOne({ email });
       if (emailExists) {
         throw new Error("Email already exist !!!");
       }
+
       let users = await new userSchema({
         username: username,
         email: email.toLowerCase(),
@@ -36,20 +39,19 @@ module.exports = {
       };
     },
 
+    // Login user
     async loginUser(_, { loginInput: { email, password } }) {
       const user = await userSchema.findOne({ email });
       if (!user) {
         throw new Error("Email not exist !!!");
       }
       if (user && (await bcrypt.compare(password, user.password))) {
-        // Create token
-        const token = await jwt.sign({ email }, process.env.JWT_SECRET);
+        const token = await jwt.sign({ email }, process.env.JWT_SECRET); // Create token
 
-        // save user token
-        user.token = token;
+        user.token = token; // save user token
 
-        //graphql output
         return {
+          //graphql response
           id: user.id,
           ...user._doc,
         };
@@ -67,9 +69,10 @@ module.exports = {
       });
     },
 
+    //delete user
     async deleteUser(_, { deleteInput: { id } }) {
       await userSchema.findByIdAndDelete({ _id: id }).exec();
-      return "user dlete";
+      return "user delete";
     },
   },
 };
