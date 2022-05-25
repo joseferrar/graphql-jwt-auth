@@ -1,6 +1,8 @@
 require("dotenv").config();
-const { ApolloServer } = require('apollo-server');
+const { ApolloServer } = require("apollo-server");
 const mongoose = require("mongoose");
+const jwt = require("jsonwebtoken");
+
 const typeDefs = require("./graphql/types/users");
 const resolvers = require("./graphql/resolvers");
 
@@ -23,9 +25,17 @@ const server = new ApolloServer({
   typeDefs: typeDefs,
   resolvers: resolvers,
   csrfPrevention: true,
+
+  context: ({ req }) => {
+    const { authorization } = req.headers;
+    if (authorization) {
+      const { userId } = jwt.verify(authorization, process.env.JWT_SECRET);
+      return { userId };
+    }
+  },
 });
 
 // Launch the server
 server.listen(process.env.PORT, () => {
-    console.log("listening on port " + process.env.PORT);
-})
+  console.log("listening on port " + process.env.PORT);
+});
